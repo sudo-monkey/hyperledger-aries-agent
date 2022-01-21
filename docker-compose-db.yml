@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  db-issuer:
+    image: db
+    build:
+      context: ./db
+      dockerfile: ../image/Dockerfile
+    container_name: db-issuer
+    # build:
+    #   context: ./db
+    #   dockerfile: Dockerfile
+    ports:
+     - "5050:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    environment: 
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=password
+    #  - APP_DB_USER=postgres
+    #  - APP_DB_PASS=password
+    #  - APP_DB_NAME=issuer
+    volumes:
+     - ./db:/docker-entrypoint-initdb.d/
+     - ./db:/var/lib/postgresql/data:z
+    networks:
+     - von_von
+  db-holder:
+    image: db
+    build:
+      context: ./db
+      dockerfile: ../image/Dockerfile
+    container_name: db-holder
+    # build:
+    #   context: ./db
+    #   dockerfile: Dockerfile
+    ports:
+     - "6060:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    environment: 
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=password
+    #  - APP_DB_USER=postgres
+    #  - APP_DB_PASS=password
+    #  - APP_DB_NAME=holder
+    # volumes:
+     - ./db:/docker-entrypoint-initdb.d/
+     - ./db:/var/lib/postgresql/data:z
+    networks:
+     - von_von
+networks:
+  von_von:
+    external: false
+    name: von_von

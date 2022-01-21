@@ -1,0 +1,78 @@
+{
+    "auto_offer": False,
+    "auto_remove": False,
+    "created_at": "2021-12-24 00: 16: 22.517844Z",
+    "thread_id": "9d148c63-7a69-4132-846f-498232bbbadb",
+    "state": "proposal-sent",
+    "auto_issue": False,
+    "cred_proposal": {
+        "@type": "https: //didcomm.org/issue-credential/2.0/propose-credential",
+        "@id": "9d148c63-7a69-4132-846f-498232bbbadb",
+        "credential_preview": {
+            "@type": "https://didcomm.org/issue-credential/2.0/credential-preview",
+            "attributes": [
+                {
+                    "name": "name",
+                    "mime-type": "plain/text",
+                    "value": "Apple Inc Malaysia Sdn Bhd"
+                },
+                {
+                    "name": "phone",
+                    "mime-type": "plain/text",
+                    "value": "018XXX8586"
+                },
+                {
+                    "name": "ID",
+                    "mime-type": "plain/text",
+                    "value": "G8XXXXXX8P"
+                }
+            ]
+        },
+        "formats": [
+            {
+                "attach_id": "indy",
+                "format": "hlindy/cred-filter@v2.0"
+            }
+        ],
+        "filters~attach": [
+            {
+                "@id": "indy",
+                "mime-type": "application/json",
+                "data": {
+                    "base64": "e30="
+                }
+            }
+        ],
+        "comment": "Hello Regov. Kindly review my third proposal for digital certification"
+    },
+    "by_format": {
+        "cred_proposal": {
+            "indy": {}
+        }
+    },
+    "connection_id": "dbdf5aae-8add-44bb-9136-96e73b1a57a7",
+    "role": "holder",
+    "cred_preview": {
+        "@type": "https://didcomm.org/issue-credential/2.0/credential-preview",
+        "attributes": [
+            {
+                "name": "name",
+                "mime-type": "plain/text",
+                "value": "Apple Inc Malaysia Sdn Bhd"
+            },
+            {
+                "name": "phone",
+                "mime-type": "plain/text",
+                "value": "018XXX8586"
+            },
+            {
+                "name": "ID",
+                "mime-type": "plain/text",
+                "value": "G8XXXXXX8P"
+            }
+        ]
+    },
+    "initiator": "self",
+    "cred_ex_id": "e41e1d20-af34-41e4-88a6-38656bde804e",
+    "updated_at": "2021-12-24 00:16:22.517844Z"
+}

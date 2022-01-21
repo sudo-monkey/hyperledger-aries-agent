@@ -1,0 +1,17 @@
+version: '3'
+# init main app image
+services:
+  controller:
+    build:
+      context: ./webhooks
+      dockerfile: Dockerfile
+    image: webhook:latest
+    container_name: webhook
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./webhooks:/app
+networks:
+  default:
+    external: true
+    name: von_von

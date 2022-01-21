@@ -1,0 +1,4 @@
+Flask
+Flask-Login
+aries-cloudagent==0.7.1
+python3-indy

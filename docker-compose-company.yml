@@ -1,0 +1,59 @@
+version: "3"
+services:
+  company:
+    image: holder
+    build:
+      context: ./image
+      dockerfile: Dockerfile.agent
+    container_name: Company
+    environment:
+      - ACAPY_LABEL=Company-B
+      - ACAPY_ENDPOINT=http://company:4000
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_ADMIN=[0.0.0.0, 4009]
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=holder
+      - ACAPY_WALLET_SEED=company0000000000000000000000000 #from registered DID on von-network
+      - ACAPY_WALLET_KEY=EV6QLBmXVLpJbhhUiDM4FH4n9BWcnoYnuZoptThqF39c #from registered DID on von-network
+      - ACAPY_GENESIS_URL=http://von_webserver_1:8000/genesis
+      - ACAPY_AGENT_LABEL=COMPANY.AGENT
+      - ACAPY_WEBHOOK_URL=http://webhook_2:5001/webhooks
+      - ACAPY_TRACE_TARGET=log
+      - ACAPT_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=holder.agent.trace
+      ##OPTIONs | CORE
+      - ACAPY_PRESERVE_EXCHANGE_RECORDS
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_EMIT_NEW_DIDCOMM_PREFIX
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      ##OPTIONS | ISSUANCE
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
+      - ACAPY_DEBUG_CREDENTIALS=true
+      - ACAPY_AUTO_ACCEPT_INVITES=true
+      # OPTIONS| PRESENTATION
+      - ACAPY_AUTO_VERIFY_PRESENTATION=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER=true  
+      - ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST=true
+      # WALLET CONFIG
+      - ACAPY_WALLET_STORAGE_TYPE=postgres_storage
+    ports:
+      - 4000:4000
+      - 4009:4009
+    entrypoint: aca-py
+    command: start --inbound-transport http company 4000 --wallet-storage-config "{\"url\":\"db-holder:5432\",\"max_connections\":5}" --wallet-storage-creds "{\"account\":\"postgres\",\"password\":\"password\",\"admin_account\":\"postgres\",\"admin_password\":\"password\"}"
+networks:
+  default:
+    external: true
+    name: von_von
+
+# Identity successfully registered:
+# Seed: company0000000000000000000000000
+# DID: Rjwjw8zKAfj5S4zrp9ivte
+# Verkey: EV6QLBmXVLpJbhhUiDM4FH4n9BWcnoYnuZoptThqF39c 
+
+# For auto-issuance credentials
+# --auto-respond-credential-proposal
+# --auto-respond-credential-offer
+# --auto-respond-credential-request
+# --auto-store-credential

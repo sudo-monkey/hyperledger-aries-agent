@@ -1,0 +1,65 @@
+version: "3"
+services:
+  regov:
+    image: issuer
+    build:
+      context: ./image
+      dockerfile: Dockerfile.agent
+    container_name: Regov
+    environment:
+      - ACAPY_LABEL=Regov-A
+      - ACAPY_ENDPOINT=http://regov:3000
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_ADMIN=[0.0.0.0, 3009]
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=issuer
+      - ACAPY_WALLET_SEED=regov000000000000000000000000000 #from registered DID on von-network
+      - ACAPY_WALLET_KEY=23Lybd9vTTGXpVXS5UDMomX7jcJb4YEJszXAui9unVtz #from registered DID on von-network
+      - ACAPY_GENESIS_URL=http://von_webserver_1:8000/genesis
+      - ACAPY_AGENT_LABEL=REGOV.AGENT
+      - ACAPY_WEBHOOK_URL=http://webhook:5000/webhooks
+      - ACAPY_TRACE_TARGET=log
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=issuer.agent.trace
+      - ACAPY_TAILS_SERVER_BASE_URL=http://172.17.0.1:6543
+      ##OPTIONS | CORE
+      - ACAPY_PRESERVE_EXCHANGE_RECORDS
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_EMIT_NEW_DIDCOMM_PREFIX
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      # OPTIONS | ISSUANCE
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
+      - ACAPY_DEBUG_CREDENTIALS=true
+      - ACAPY_AUTO_ACCEPT_REQUESTS=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_PROPOSAL=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
+      # OPTIONS| PRESENTATION
+      - ACAPY_AUTO_RESPOND_PRESENTATION_PROPOSAL=true
+      - ACAPY_AUTO_VERIFY_PRESENTATION=true
+      - ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST=true
+      # OPTIONS | REVOCATION
+      - ACAPY_CREATE_REVOCATION_TRANSACTIONS=true
+      # WALLET CONFIG
+      - ACAPY_WALLET_STORAGE_TYPE=postgres_storage
+    ports:
+      - 3000:3000
+      - 3009:3009
+    entrypoint: aca-py
+    command: start --inbound-transport http regov 3000 --wallet-storage-config "{\"url\":\"db-issuer:5432\",\"max_connections\":5}" --wallet-storage-creds "{\"account\":\"postgres\",\"password\":\"password\",\"admin_account\":\"postgres\",\"admin_password\":\"password\"}"
+    networks:
+      - von_von
+networks:
+  von_von:
+    external: true
+    name: von_von
+# Identity successfully registered:
+# Seed: regov000000000000000000000000000
+# DID: 2uiaGAtZFzCL15n7CcxEYY
+# Verkey: 23Lybd9vTTGXpVXS5UDMomX7jcJb4YEJszXAui9unVtz 
+
+# For auto-issuance credentials
+# --auto-respond-credential-proposal
+# --auto-respond-credential-offer
+# --auto-respond-credential-request
+# --auto-store-credential
