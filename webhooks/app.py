@@ -4,6 +4,7 @@ from logging.config import dictConfig
 import json
 import requests
 from jinja2 import Template
+import datetime
 
 
 # helper function to overide output to stdout (flask)
@@ -43,6 +44,7 @@ def connections():
     js = json.dumps(payload)
     data = json.loads(js)
 
+    print('\n\n' + "============= CONNECTIONS ============" +'\n')
     print("Connection status: ", data['state'])
     print("Connection ID is ", data['connection_id'])
     return render_template('index.html', output=data)
@@ -71,6 +73,7 @@ def issuecreds():
     js = json.dumps(payload)
     data = json.loads(js)
 
+    print('\n\n' + "============= CREDENTIAL ISSUANCE v1.0 ============" +'\n')
     print("Issuance status: ", data['state'])
     print("Exchange ID: ", data['cred_ex_id'])
 
@@ -83,6 +86,7 @@ def issuecredsv2():
     js = json.dumps(payload)
     data = json.loads(js)
 
+    print('\n\n' + "============= CREDENTIAL ISSUANCE V2.0 ============" +'\n')
     print("Issuance status: ", data['state'])
     print("Exchange ID: ", data['cred_ex_id'])
     # print("Comments :", data['cred_proposal']['comment'])
@@ -95,6 +99,7 @@ def issuecredserror():
     js = json.dumps(payload)
     data = json.loads(js)
 
+    print('\n\n' + "============= PROBLEM REPORTS ============" +'\n')
     print("Response: ", data)
     return render_template('index.html', output=data)
 
@@ -105,7 +110,7 @@ def issuecreds2indy():
     js = json.dumps(payload)
     data = json.loads(js)
 
-    # print("Comments :", data['comment'])
+    print('\n\n' + "============= CREDENTIAL ISSUANCE V2.0 INDY ============" +'\n')
     print("Revocation & Exchange ID: ", data['cred_ex_id'])
     print("\nCredential: ", data)
     return render_template('index.html', output=data)
@@ -117,6 +122,7 @@ def revocationregistry():
     js = json.dumps(payload)
     data = json.loads(js)
 
+    print('\n\n' + "============= REVOCATION REGISTRY ============" +'\n')
     print("Credential Def ID: ", data['cred_def_id'])
     return render_template('index.html', output=data)
 
@@ -127,6 +133,7 @@ def issuercredrev():
     js = json.dumps(payload)
     data = json.loads(js)
 
+    print('\n\n' + "============= ISSUER CREDENTIAL REVOCATION ============" +'\n')
     print("Credential status is: ", data['state'])
     return render_template('index.html', output=data)
 
@@ -135,8 +142,26 @@ def presentation():
     payload = request.json
     js = json.dumps(payload)
     data = json.loads(js)
+    epoch = int(datetime.datetime.now().timestamp())
+    dt = datetime.datetime.now()
 
-    print("Data: ", data)
+    if 'verified' not in data:
+        print("Verification not found\n")
+        print(data)
+        print('\n\n' + "============= CREDENTIAL CHECK ============" +'\n')
+        print("Role: ", data['role'])
+        print("Status: ", data['state'])
+        print("Validity: ", 'invalid')
+        print("Valid as epoch: " + str(epoch) + '  @ ' + str(dt) + '\n\n')
+    else:
+        print("Check is valid\n")
+        print(data)
+        print('\n\n' + "============= CREDENTIAL CHECK ============" +'\n')
+        print("Role: ", data['role'])
+        print("Status: ", data['state'])
+        print("Validity: ", data['verified'])
+        print("Valid as epoch: " + str(epoch) + '  @ ' + str(dt) + '\n\n')
+
     return render_template('index.html', output=data)
 
     

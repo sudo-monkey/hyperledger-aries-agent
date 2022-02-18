@@ -1,0 +1,47 @@
+{
+    "connection_id": "5a06281e-9cd3-4fda-893a-1a9298a5a2ef",
+    "comment": "Credential check",
+    "proof_request": {
+      "name": "Proof of license",
+      "non_revoked": {
+        "from": 1645158048,
+        "to": 1645158169
+      },
+      "version": "1.0",
+      "requested_attributes": {
+      "0_name_uuid": {
+        "name": "name",
+        "restrictions": [
+          {
+            "cred_def_id": "2uiaGAtZFzCL15n7CcxEYY:3:CL:10:default"
+          }       
+        ]
+      },
+      "0_phone_uuid": {
+        "name": "phone",
+        "restrictions": [
+          {
+            "cred_def_id": "2uiaGAtZFzCL15n7CcxEYY:3:CL:10:default"
+          }
+        ]
+      },
+      "0_ID_uuid": {
+        "name": "ID",
+        "restrictions": [
+          {
+            "cred_def_id": "2uiaGAtZFzCL15n7CcxEYY:3:CL:10:default"
+          }
+        ]
+      },
+          "0_age_uuid": {
+        "name": "age",
+        "restrictions": [
+          {
+            "cred_def_id": "2uiaGAtZFzCL15n7CcxEYY:3:CL:10:default"
+          }
+        ]
+      }
+    },
+    "requested_predicates": {}
+   }
+  }
