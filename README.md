@@ -13,7 +13,13 @@
 
 - IMPORTANT: run the following steps inside terminator terminator. If you are using gnome-terminal, run ```terminator``` or skip this step if you are already using terminator as terminal
 
-- run the spell:
+- due to permissioning issue, remove and recreate db folder:
+```sudo rm -rf db/ && mkdir db```
+
+- start the database:
+```docker-compose -f docker-compose-db.yml up --build```
+
+- (on another terminator terminal)run the spell:
 ```./start.sh```
 
 ## Manual initialization
