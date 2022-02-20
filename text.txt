@@ -1,2 +1,0 @@
-connection ID (issuer/verifier): 
-connection ID (holder): 

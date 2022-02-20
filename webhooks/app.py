@@ -142,7 +142,7 @@ def presentation():
     payload = request.json
     js = json.dumps(payload)
     data = json.loads(js)
-    epoch = int(datetime.datetime.now().timestamp())
+    epoch = int(datetime.datetime.utcnow().timestamp())
     dt = datetime.datetime.now()
 
     if 'verified' not in data:
